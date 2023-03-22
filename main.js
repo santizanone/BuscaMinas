@@ -28,16 +28,29 @@ function setup()
   COLOR_CASILLERO_MARCADO = color("#278EF2");
 
   // Modificar/completar
+  for(let i=0; i<10; i++){
+    let columna = getRandomInt(10);
+    let fila = getRandomInt(10);
+    if(!(tieneMinaCasillero(columna, fila))){
+      ponerMinaCasillero(columna, fila);
+    }
+    console.log("Fila: "+fila+" Columna: "+columna)
+  }
 }
 
 
 function draw() {
+  
   if (hizoClick == true)
   {
-    pintarCasillero(columnaPresionada, filaPresionada, COLOR_CASILLERO_SIN_MINA); //pinta el casillero clickeado. Modificar/completar
-
-
-    
+    if(mouseButton == LEFT){
+      if(tieneMinaCasillero(columnaPresionada, filaPresionada)){
+        perder();
+      }else{
+        pintarCasillero(columnaPresionada, filaPresionada, COLOR_CASILLERO_SIN_MINA); //pinta el casillero clickeado. Modificar/completar
+      }
+    }  
+      
     hizoClick = false;  //Indico que ya "procesé" el click del usuario. NO modificar
   }
 }
@@ -61,4 +74,8 @@ function mostrarMinas()
 function contarMinasAlrededor(columna, fila)
 {
   return 9;   //Esto hace que SIEMPRE cuente 9 minas alrededor. Modificar/completar
+}
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
 }
