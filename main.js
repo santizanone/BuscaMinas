@@ -15,7 +15,7 @@ var hizoClick = false;
 
 //Otras variables
 var casillerosSinDescubrir;
-
+//let matrizFC = [[],[]];
 
 function setup()
 {
@@ -27,20 +27,15 @@ function setup()
   COLOR_CASILLERO_SIN_MINA = color("#1CC932");
   COLOR_CASILLERO_MARCADO = color("#278EF2");
 
-  // Modificar/completar
-  for(let i=0; i<10; i++){
-    let columna = getRandomInt(10);
-    let fila = getRandomInt(10);
-    if(!(tieneMinaCasillero(columna, fila))){
-      ponerMinaCasillero(columna, fila);
-    }
-    console.log("Fila: "+fila+" Columna: "+columna)
-  }
+  casillerosSinDescubrir = FILAS * COLUMNAS;
+  ponerMinasTablero();
+  //matrizFC = ponerMinasTablero();
+  //console.log(matrizFC);
+  
 }
 
 
 function draw() {
-  
   if (hizoClick == true)
   {
     if(mouseButton == LEFT){
@@ -48,9 +43,17 @@ function draw() {
         perder();
       }else{
         pintarCasillero(columnaPresionada, filaPresionada, COLOR_CASILLERO_SIN_MINA); //pinta el casillero clickeado. Modificar/completar
+        descubrirCasillero(columnaPresionada, filaPresionada);
       }
-    }  
-      
+    }
+    if(mouseButton == RIGHT){
+      pintarCasillero(columnaPresionada, filaPresionada, COLOR_CASILLERO_MARCADO);
+    }
+
+    if(ganoElJuego()){
+      ganar();
+    }
+
     hizoClick = false;  //Indico que ya "procesé" el click del usuario. NO modificar
   }
 }
@@ -58,17 +61,38 @@ function draw() {
 
 function ganoElJuego()
 {
-  return false;   //Esto hace que NUNCA gane el juego. Modificar/completar
+  return (casillerosSinDescubrir == CANTIDAD_MINAS);   //Esto hace que NUNCA gane el juego. Modificar/completar
 }
 
-function ponerMinasTablero()
+function ponerMinasTablero() //Agregar la funcionalidad de devolver la matriz de minas
 {
-  // Modificar/completar
+  //let filas = [];
+  //let columnas = [];
+  let i = 0;
+
+  while(i<CANTIDAD_MINAS){
+    let columna = getRandomInt(COLUMNAS);
+    let fila = getRandomInt(FILAS);
+    if(!(tieneMinaCasillero(columna, fila))){
+      ponerMinaCasillero(columna, fila);
+    }
+    else{
+      continue;
+    }
+    console.log("Fila: "+fila+" Columna: "+columna)
+    //filas.push(fila);
+    //columnas.push(columna);
+    i++;
+  }
+
+  //let filasColumnas = [[filas][columnas]];
+
+  //return filasColumnas;
 }
 
 function mostrarMinas()
 {
-  // Modificar/completar
+  
 }
 
 function contarMinasAlrededor(columna, fila)
