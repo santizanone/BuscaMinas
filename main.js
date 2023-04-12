@@ -15,7 +15,8 @@ var hizoClick = false;
 
 //Otras variables
 var casillerosSinDescubrir;
-//let matrizFC = [[],[]];
+var minas = [];
+
 
 function setup()
 {
@@ -29,9 +30,8 @@ function setup()
 
   casillerosSinDescubrir = FILAS * COLUMNAS;
   ponerMinasTablero();
-  //matrizFC = ponerMinasTablero();
-  //console.log(matrizFC);
-  
+
+  console.log(minas);
 }
 
 
@@ -64,35 +64,36 @@ function ganoElJuego()
   return (casillerosSinDescubrir == CANTIDAD_MINAS);   //Esto hace que NUNCA gane el juego. Modificar/completar
 }
 
-function ponerMinasTablero() //Agregar la funcionalidad de devolver la matriz de minas
-{
-  //let filas = [];
-  //let columnas = [];
+function ponerMinasTablero(){
   let i = 0;
+  let columnas = [];
+  let filas = [];
 
   while(i<CANTIDAD_MINAS){
     let columna = getRandomInt(COLUMNAS);
     let fila = getRandomInt(FILAS);
     if(!(tieneMinaCasillero(columna, fila))){
       ponerMinaCasillero(columna, fila);
+      columnas.push(columna);
+      filas.push(fila);
     }
     else{
       continue;
     }
     console.log("Fila: "+fila+" Columna: "+columna)
-    //filas.push(fila);
-    //columnas.push(columna);
     i++;
   }
 
-  //let filasColumnas = [[filas][columnas]];
+  minas.push(filas);
+  minas.push(columnas);
 
-  //return filasColumnas;
 }
 
 function mostrarMinas()
 {
-  
+  for (let i= 0; i < CANTIDAD_MINAS; i++) {
+    pintarCasillero(minas[0][i], minas[1][i], COLOR_CASILLERO_CON_MINA);
+  }
 }
 
 function contarMinasAlrededor(columna, fila)
