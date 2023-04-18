@@ -30,7 +30,6 @@ function setup()
 
   casillerosSinDescubrir = FILAS * COLUMNAS;
   ponerMinasTablero();
-
   console.log(minas);
 }
 
@@ -81,7 +80,7 @@ function ponerMinasTablero(){
     else{
       continue;
     }
-    console.log("Fila: "+fila+" Columna: "+columna)
+    //console.log("Fila: "+fila+" Columna: "+columna)
     i++;
   }
 
@@ -99,13 +98,23 @@ function mostrarMinas()
 
 function contarMinasAlrededor(columna, fila)
 {
-  let contadorMinasAlrededor = 0;
-  for(let i=0;i<CANTIDAD_MINAS;i++){
-      if(((fila-minas[0][i]<=1) && (fila-minas[0][i]>=-1)) && ((columna-minas[1][i]<=1) && (columna-minas[1][i]>=-1))){
-        contadorMinasAlrededor++;
+  /*
+  if(((fila-minas[0][i]<=1) && (fila-minas[0][i]>=-1)) && ((columna-minas[1][i]<=1) && (columna-minas[1][i]>=-1))){
+    contadorMinasAlrededor++;
+  }*///menos legible y la manera de simplificarlo no dio resultados.
+
+  let contadorMinas = 0;
+  for (let  i = fila-1; i <= fila+1; i++) {
+    for(let j = columna-1; j <= columna+1; j++){
+      if(j<0 || i<0){
+        continue;
       }
+      if(tieneMinaCasillero(j,i)){
+        contadorMinas++;
+      }
+    } 
   }
-  return contadorMinasAlrededor;   //Esto hace que SIEMPRE cuente 9 minas alrededor. Modificar/completar
+  return contadorMinas;
 }
 
 function getRandomInt(max) {
