@@ -40,6 +40,7 @@ function draw() {
   {
     if(mouseButton == LEFT){
       if(tieneMinaCasillero(columnaPresionada, filaPresionada)){
+        pintarCasillero(columnaPresionada, filaPresionada, COLOR_CASILLERO_CON_MINA);
         perder();
       }else{
         pintarCasillero(columnaPresionada, filaPresionada, COLOR_CASILLERO_SIN_MINA); //pinta el casillero clickeado. Modificar/completar
@@ -92,13 +93,19 @@ function ponerMinasTablero(){
 function mostrarMinas()
 {
   for (let i= 0; i < CANTIDAD_MINAS; i++) {
-    pintarCasillero(minas[0][i], minas[1][i], COLOR_CASILLERO_CON_MINA);
+    pintarCasillero(minas[1][i], minas[0][i], COLOR_CASILLERO_CON_MINA);
   }
 }
 
 function contarMinasAlrededor(columna, fila)
 {
-  return 9;   //Esto hace que SIEMPRE cuente 9 minas alrededor. Modificar/completar
+  let contadorMinasAlrededor = 0;
+  for(let i=0;i<CANTIDAD_MINAS;i++){
+      if(((fila-minas[0][i]<=1) && (fila-minas[0][i]>=-1)) && ((columna-minas[1][i]<=1) && (columna-minas[1][i]>=-1))){
+        contadorMinasAlrededor++;
+      }
+  }
+  return contadorMinasAlrededor;   //Esto hace que SIEMPRE cuente 9 minas alrededor. Modificar/completar
 }
 
 function getRandomInt(max) {
