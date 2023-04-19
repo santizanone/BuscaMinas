@@ -98,10 +98,7 @@ function mostrarMinas()
 
 function contarMinasAlrededor(columna, fila)
 {
-  /*
-  if(((fila-minas[0][i]<=1) && (fila-minas[0][i]>=-1)) && ((columna-minas[1][i]<=1) && (columna-minas[1][i]>=-1))){
-    contadorMinasAlrededor++;
-  }*///menos legible y la manera de simplificarlo no dio resultados.
+
 
   let contadorMinas = 0;
   for (let  i = fila-1; i <= fila+1; i++) {
